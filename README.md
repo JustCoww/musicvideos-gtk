@@ -3,10 +3,8 @@
 ## Install
 ```
 pip install --upgrade musicvideos ;
-git clone https://github.com/JustCoww/musicvideos-gtk ; 
-
-chmod +x "musicvideos-gtk/bin/videomacheen" ; 
-sudo cp "musicvideos-gtk/bin/videomacheen" /bin/ ;
+sudo curl https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/videomacheen -o /usr/bin/videomacheen ;
+sudo chmod +x /usr/bin/videomacheen ;
 
 echo "Done!"
 ```
