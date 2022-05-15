@@ -1,8 +1,8 @@
-from musicvideos.extras import PublishVideo
 import os
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+from musicvideos.extras import PublishVideo
 
 class Application:
     def __init__(self):
