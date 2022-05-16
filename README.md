@@ -1,5 +1,8 @@
 # musicvideos-gtk
 
+![image](https://user-images.githubusercontent.com/68345611/168532466-825e5029-4c36-4fec-acea-059ffa7adee1.png)
+
+
 ## Install
 ```
 pip install --upgrade musicvideos ;
