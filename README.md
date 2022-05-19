@@ -5,15 +5,15 @@
 ## Install
 ```
 pip install --upgrade musicvideos ;
-sudo curl https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/videomacheen -o /usr/bin/videomacheen ;
-sudo chmod +x /usr/bin/videomacheen ;
+sudo curl https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/musicvideos-gtk -o /usr/bin/musicvideos-gtk ;
+sudo chmod +x /usr/bin/musicvideos-gtk ;
 
 echo "Done!"
 ```
 
 ## Uninstall
 ```
-sudo rm "/bin/videomacheen" ;
+sudo rm "/bin/musicvideos-gtk" ;
 
 echo "Done!"
 ```
