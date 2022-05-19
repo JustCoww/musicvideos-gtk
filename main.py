@@ -1,134 +1,162 @@
 #!/usr/bin/env python3
 
-import os
 import gi
+import sys
+import time
+import multiprocessing
+from musicvideos.build import BuildVideo
 
 gi.require_version('Gtk', '3.0')
-
 from gi.repository import Gtk
-from musicvideos.extras import PublishVideo
+
+
+def loading_fraction(bar, fraction):
+    thread = multiprocessing.Process(target=bar.set_fraction, args=[fraction])
+    thread.start()
+    return 0
+
+
+def build(self, widget):
+    # Get info from the gui things
+    client_secrets = self.builder.get_object('youtube_entry_box').get_text()
+    cover = self.builder.get_object('cover_entry_box').get_text()
+    audio = self.builder.get_object('audio_entry_box').get_text()
+    artists = self.builder.get_object('artists_entry_box').get_text()
+    song = self.builder.get_object('song_entry_box').get_text()
+    reverb = self.builder.get_object('reverb_slide').get_value()
+    speed = self.builder.get_object('speed_slide').get_value()
+    custom_toptext = self.builder.get_object('toptext_entry_box').get_text()
+    compress = self.builder.get_object('compress_toggle').get_active()
+    upload = self.builder.get_object('upload_toggle').get_active()
+    remove_toptext = not self.builder.get_object('toptext_toggle').get_active()
+
+    # If audio or cover not specified error out and cancel the building process
+    if audio == '' or cover == '':
+        self.building = False
+        return print('Audio or Cover not specified!')
+
+    # If audio and cover are specified start the building process :)
+    loading_fraction(self.loading, 0.0)
+    video = BuildVideo(song=song,
+                        artists=artists,
+                        audio=audio,
+                        cover=cover,
+                        speed=speed,
+                        reverb=reverb,
+                        remove_toptext=remove_toptext)
+    if custom_toptext != '' and not remove_toptext:
+        video.custom_toptext(custom_toptext)
+
+    # Exports
+    video.export_audio()
+    loading_fraction(self.loading, 0.2)
+    video.export_images()
+    loading_fraction(self.loading, 0.4)
+    video.export_video()
+    loading_fraction(self.loading, 0.6)
+    if upload:
+        video.upload_youtube(client_secrets=client_secrets)
+        loading_fraction(self.loading, 0.8)
+    video.finish(compress=compress)
+    loading_fraction(self.loading, 1.0)
+
+    # At the end remove the loading bar and set the building status to False
+    time.sleep(1)
+    widget.remove(self.loading)
+    widget.add(self.build_label)
+    self.building = False
+    return 0
+
 
 class Application:
+
     def __init__(self):
+        # ----- Variables ----- #
+        self.compress = True
+        self.upload = False
+        self.toptext = True
+        self.building = False
+        # ----- Window ----- #
         self.builder = Gtk.Builder()
         self.builder.add_from_file('app.glade')
         self.builder.connect_signals(self)
-        self.builder.get_object('main_window').show()
-        self.compress = True
-        self.upload = False
+        self.window = self.builder.get_object('main_window')
+        self.window.show()
+        # ----- Progress Bar ----- #
+        self.loading = Gtk.ProgressBar()
+        self.loading.show()
+        self.loading.set_pulse_step(0.1)
+        self.loading.set_vexpand(False)
+        self.loading.set_valign(Gtk.Align.CENTER)
+        # ----- Build Button Label ----- #
+        self.build_label = Gtk.Label()
+        self.build_label.set_text('Build')
+        self.build_label.show()
+        self.build_label.set_vexpand(False)
+        self.build_label.set_valign(Gtk.Align.CENTER)
+        self.builder.get_object('build_button ').add(self.build_label)
 
-    def on_main_window_destroy(self, widget):
-        exit()
+    def on_main_window_delete_event(self, idk, crazy):
+        if not self.building: return Gtk.main_quit()
+        dialog = self.builder.get_object('close_dialog_window')
+        response = dialog.run()
+        if response == Gtk.ResponseType.YES:
+            dialog.hide()
+            Gtk.main_quit()
+            self.build_thread.terminate()
+            sys.exit()
+            return False
+        else:
+            dialog.hide()
+            return True
 
-    def on_audio_input_draw(self, widget, cr):
-        self.song_input_widget = widget
-
-    def on_audio_input_changed(self, widget):
-        self.song = widget.get_text()
 
     def on_audio_open_button(self, widget):
         file_chooser = self.builder.get_object('file_chooser_window')
         response = file_chooser.run()
         if response == Gtk.ResponseType.YES:
             file_chooser.hide()
-            self.song = file_chooser.get_filename().replace(' ', '\ ')
-            self.song_input_widget.set_text(self.song)
+            filename = file_chooser.get_filename()
+            self.builder.get_object('audio_entry_box').set_text(filename)
         else:
             file_chooser.hide()
-
-    def on_cover_input_draw(self, widget, cr):
-        self.cover_input_widget = widget
-
-    def on_cover_input_changed(self, widget):
-        self.cover = widget.get_text()
 
     def on_cover_open_button(self, widget):
         file_chooser = self.builder.get_object('file_chooser_window')
         response = file_chooser.run()
         if response == Gtk.ResponseType.YES:
             file_chooser.hide()
-            self.cover = file_chooser.get_filename().replace(' ', '\ ')
-            self.cover_input_widget.set_text(self.cover)
+            filename = file_chooser.get_filename()
+            self.builder.get_object('cover_entry_box').set_text(filename)
         else:
             file_chooser.hide()
-
-    def on_artists_input_changed(self, widget):
-        self.artists = widget.get_text()
-
-    def on_song_changed(self, widget):
-        self.name = widget.get_text()
-
-    def on_reverb_slide_draw(self, widget, idk):
-        self.reverb = widget.get_value()
-        self.reverb_widget = widget
-
-    def on_speed_slide_draw(self, widget, idk):
-        self.speed = widget.get_value()
-        self.speed_widget = widget
-
-
-    def on_compress_draw(self, widget, cr):
-        self.compress_widget = widget
-
-    def on_compress_on(self, widget):
-        if self.compress:
-            self.compress = False
-        else:
-            self.compress = True
-
-    def on_upload_draw(self, widget, cr):
-        self.upload_widget = widget
-
-    def on_upload_toggle(self, widget):
-        if self.upload:
-            self.upload = False
-        else:
-            self.upload = True
-
-    
-    def on_yt_input_draw(self, widget, cr):
-        self.yt_input_widget = widget
-
-    def on_yt_input_changed(self, widget):
-        self.client_secrets = widget.get_text()
 
     def on_yt_open_button(self, widget):
         file_chooser = self.builder.get_object('file_chooser_window')
         response = file_chooser.run()
         if response == Gtk.ResponseType.YES:
             file_chooser.hide()
-            self.client_secrets = file_chooser.get_filename().replace(' ', '\ ')
-            self.yt_input_widget.set_text(self.client_secrets)
+            filename = file_chooser.get_filename()
+            self.builder.get_object('youtube_entry_box').set_text(filename)
         else:
             file_chooser.hide()
 
-
     def on_slowed_default_click(self, widget):
-        self.reverb_widget.set_value(2.0)
-        self.speed_widget.set_value(-4.0)
+        self.builder.get_object('reverb_slide').set_value(2.0)
+        self.builder.get_object('speed_slide').set_value(-4.0)
 
     def on_nightcore_default_click(self, widget):
-        self.reverb_widget.set_value(2.0)
-        self.speed_widget.set_value(5.0)
+        self.builder.get_object('reverb_slide').set_value(2.0)
+        self.builder.get_object('speed_slide').set_value(5.0)
 
     def on_build_click(self, widget):
-        new_video = PublishVideo()
-        new_video.files(audio=self.song, cover=self.cover)
-        new_video.speed(int(self.speed))
-        new_video.reverb(dry=60, wet=int(self.reverb*10))
-        if ',' in self.artists:
-            self.features = self.artists.split(', ')
-            self.artist = self.features[0]
-            self.features = self.features[1:]
-            new_video.info(artist=self.artist, song=self.name, features=self.features)
-        else:
-            new_video.info(artist=self.artists, song=self.name)
-        if self.compress:
-            new_video.make(compress_files=True)
-        else:
-            new_video.make()
-        if self.upload:
-            new_video.upload(client_secrets=self.client_secrets)    
+        if not self.building:
+            self.building = True
+            widget.remove(self.build_label)
+            widget.add(self.loading)
+            self.build_thread = multiprocessing.Process(target=build, args=[self, widget])
+            self.build_thread.start()
+
 
 Application()
 Gtk.main()
