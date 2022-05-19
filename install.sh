@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 echo "Installing..."
 pip3 install --upgrade musicvideos
-chmod +x bin/videomacheen
-sudo cp bin/videomacheen /usr/bin/
+chmod +x bin/*
+sudo cp bin/* /usr/bin/
 echo "Done!"
