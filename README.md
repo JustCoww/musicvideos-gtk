@@ -1,6 +1,7 @@
 # musicvideos-gtk
 
-![image](https://user-images.githubusercontent.com/68345611/168532579-d112aab7-8020-4a28-af44-2ca8fc08125f.png)
+![image](https://user-images.githubusercontent.com/68345611/169414982-e716c322-4de6-4149-ac8d-1eb697ebb4be.png)
+
 
 ## Install
 ```
