@@ -6,25 +6,25 @@
 ## Install
 ```
 pip install --upgrade musicvideos ;
-sudo curl https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/musicvideos-gtk -o /usr/bin/musicvideos-gtk ;
-sudo chmod +x /usr/bin/musicvideos-gtk ;
+sudo curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/musicvideos-gtk" -o "/usr/bin/musicvideos-gtk" ;
+sudo chmod +x "/usr/bin/musicvideos-gtk" ;
 
 echo "Done!"
 ```
 
 ## Update
 ```
-sudo rm "/bin/musicvideos-gtk" ;
+sudo rm "/usr/bin/musicvideos-gtk" ;
 pip install --upgrade musicvideos ;
-sudo curl https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/musicvideos-gtk -o /usr/bin/musicvideos-gtk ;
-sudo chmod +x /usr/bin/musicvideos-gtk ;
+sudo curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/musicvideos-gtk" -o "/usr/bin/musicvideos-gtk" ;
+sudo chmod +x "/usr/bin/musicvideos-gtk" ;
 
 echo "Done!"
 ```
 
 ## Uninstall
 ```
-sudo rm "/bin/musicvideos-gtk" ;
+sudo rm "/usr/bin/musicvideos-gtk" ;
 
 echo "Done!"
 ```
