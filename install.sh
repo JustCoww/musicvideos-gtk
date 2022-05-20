@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 echo "Installing musicvideos pip package"
-pip install --upgrade musicvideos > /dev/null ;
+pip install --upgrade musicvideos-extras > /dev/null ;
 pip install --upgrade pygobject > /dev/null ;
 sleep 1s
 echo "Downloading..."
