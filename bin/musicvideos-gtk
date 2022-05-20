@@ -710,7 +710,6 @@ def build(self, widget):
         return print('Audio or Cover not specified!')
 
     # If audio and cover are specified start the building process :)
-    loading_fraction(self.loading, 0.1)
     video = BuildVideo(song=song,
                         artists=artists,
                         audio=audio,
@@ -722,13 +721,13 @@ def build(self, widget):
         video.custom_toptext(custom_toptext)
 
     # Exports
-    loading_fraction(self.loading, 0.2)
+    loading_fraction(self.loading, 0.1)
     video.export_audio()
     loading_fraction(self.loading, 0.3)
     video.export_images()
-    loading_fraction(self.loading, 0.6)
+    loading_fraction(self.loading, 0.5)
     video.export_video()
-    loading_fraction(self.loading, 0.8)
+    loading_fraction(self.loading, 0.7)
     if upload:
         video.upload_youtube(client_secrets=client_secrets)
         loading_fraction(self.loading, 0.9)
