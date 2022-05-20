@@ -50,3 +50,5 @@ echo "Done!"
 ```shell
 pip uninstall musicvideos
 ```
+
+App icon is from Yaru theme.
