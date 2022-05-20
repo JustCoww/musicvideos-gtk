@@ -3,8 +3,23 @@
 ![image](https://user-images.githubusercontent.com/68345611/169414982-e716c322-4de6-4149-ac8d-1eb697ebb4be.png)
 
 
-## Install
+# Install
+
+## Fedora
 ```shell
+sudo dnf install pip
+curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/install.sh" | sh
+```
+
+## Arch Linux
+```shell
+sudo pacman -Sy python-pip
+curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/install.sh" | sh
+```
+
+## Debian
+```shell
+sudo apt install python3-pip
 curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/install.sh" | sh
 ```
 
