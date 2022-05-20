@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
+import os
 import gi
-import sys
 import time
+import signal
 import multiprocessing
+import threading
 from musicvideos.build import BuildVideo
 
 gi.require_version('Gtk', '3.0')
@@ -11,7 +13,7 @@ from gi.repository import Gtk
 
 
 def loading_fraction(bar, fraction):
-    thread = multiprocessing.Process(target=bar.set_fraction, args=[fraction])
+    thread = threading.Thread(target=bar.set_fraction, args=[fraction])
     thread.start()
     return 0
 
@@ -48,15 +50,16 @@ def build(self, widget):
         video.custom_toptext(custom_toptext)
 
     # Exports
-    video.export_audio()
     loading_fraction(self.loading, 0.2)
+    video.export_audio()
+    loading_fraction(self.loading, 0.3)
     video.export_images()
-    loading_fraction(self.loading, 0.4)
-    video.export_video()
     loading_fraction(self.loading, 0.6)
+    video.export_video()
+    loading_fraction(self.loading, 0.8)
     if upload:
         video.upload_youtube(client_secrets=client_secrets)
-        loading_fraction(self.loading, 0.8)
+        loading_fraction(self.loading, 0.9)
     video.finish(compress=compress)
     loading_fraction(self.loading, 1.0)
 
@@ -69,7 +72,6 @@ def build(self, widget):
 
 
 class Application:
-
     def __init__(self):
         # ----- Variables ----- #
         self.compress = True
@@ -103,8 +105,8 @@ class Application:
         if response == Gtk.ResponseType.YES:
             dialog.hide()
             Gtk.main_quit()
-            self.build_thread.terminate()
-            sys.exit()
+            os.kill(os.getpid(), signal.SIGTERM)
+            exit()
             return False
         else:
             dialog.hide()
@@ -154,7 +156,7 @@ class Application:
             self.building = True
             widget.remove(self.build_label)
             widget.add(self.loading)
-            self.build_thread = multiprocessing.Process(target=build, args=[self, widget])
+            self.build_thread = threading.Thread(target=build, args=[self, widget])
             self.build_thread.start()
 
 
