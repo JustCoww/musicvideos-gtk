@@ -4,7 +4,6 @@ import os
 import gi
 import time
 import signal
-import multiprocessing
 import threading
 from musicvideos.build import BuildVideo
 
@@ -12,9 +11,11 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 
-def loading_fraction(bar, fraction):
-    thread = threading.Thread(target=bar.set_fraction, args=[fraction])
-    thread.start()
+def progressbar_modify(bar, fractionm, text):
+    thread_frac = threading.Thread(target=bar.set_fraction, args=[fraction])
+    thread_text = threading.Thread(target=bar.set_text, args=[text])
+    thread_frac.start()
+    thread_text.start()
     return 0
 
 
@@ -50,18 +51,19 @@ def build(self, widget):
         video.custom_toptext(custom_toptext)
 
     # Exports
-    loading_fraction(self.loading, 0.1)
+    progressbar_modify(self.loading, 0.3, 'Exporting audio')
     video.export_audio()
-    loading_fraction(self.loading, 0.3)
+    progressbar_modify(self.loading, 0.4, 'Exporting images')
     video.export_images()
-    loading_fraction(self.loading, 0.5)
+    progressbar_modify(self.loading, 0.6, 'Exporting Video')
     video.export_video()
-    loading_fraction(self.loading, 0.7)
+    progressbar_modify(self.loading, 0.7, 'Video Exported')
     if upload:
+        progressbar_modify(self.loading, 0.8, 'Uploading')
         video.upload_youtube(client_secrets=client_secrets)
-        loading_fraction(self.loading, 0.9)
+    progressbar_modify(self.loading, 0.9, 'Finishing')
     video.finish(compress=compress)
-    loading_fraction(self.loading, 1.0)
+    progressbar_modify(self.loading, 1.0)
 
     # At the end remove the loading bar and set the building status to False
     time.sleep(1)
