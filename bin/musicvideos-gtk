@@ -692,7 +692,7 @@ def progressbar_modify(bar, fraction, text):
     return 0
 
 
-def build(self, widget):
+def build_video(self, widget):
     # Get info from the gui things
     client_secrets = self.builder.get_object('youtube_entry_box').get_text()
     cover = self.builder.get_object('cover_entry_box').get_text()
@@ -831,7 +831,7 @@ class Application:
             self.building = True
             widget.remove(self.build_label)
             widget.add(self.loading)
-            self.build_thread = threading.Thread(target=build, args=[self, widget])
+            self.build_thread = threading.Thread(target=build_video, args=[self, widget])
             self.build_thread.start()
 
 
