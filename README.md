@@ -4,7 +4,7 @@
 
 
 ## Install
-```
+```shell
 pip install --upgrade musicvideos ;
 sudo curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/musicvideos-gtk" -o "/usr/bin/musicvideos-gtk" ;
 sudo chmod +x "/usr/bin/musicvideos-gtk" ;
@@ -13,7 +13,7 @@ echo "Done!"
 ```
 
 ## Update
-```
+```shell
 sudo rm "/usr/bin/musicvideos-gtk" ;
 pip install --upgrade musicvideos ;
 sudo curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/musicvideos-gtk" -o "/usr/bin/musicvideos-gtk" ;
@@ -23,12 +23,12 @@ echo "Done!"
 ```
 
 ## Uninstall
-```
+```shell
 sudo rm "/usr/bin/musicvideos-gtk" ;
 
 echo "Done!"
 ```
 ### Uninstall python library
-```
+```shell
 pip uninstall musicvideos
 ```
