@@ -5,7 +5,7 @@
 
 ## Install
 ```shell
-sh curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/install.sh"
+curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/install.sh" | sh
 ```
 
 ## Update
