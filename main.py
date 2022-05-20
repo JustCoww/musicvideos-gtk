@@ -63,7 +63,7 @@ def build(self, widget):
         video.upload_youtube(client_secrets=client_secrets)
     progressbar_modify(self.loading, 0.9, 'Finishing')
     video.finish(compress=compress)
-    progressbar_modify(self.loading, 1.0)
+    progressbar_modify(self.loading, 1.0, 'Finished')
 
     # At the end remove the loading bar and set the building status to False
     time.sleep(1)
