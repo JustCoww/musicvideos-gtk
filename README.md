@@ -14,9 +14,14 @@ echo "Done!"
 
 ## Update
 ```shell
+echo "Removeing old binary"
 sudo rm "/usr/bin/musicvideos-gtk" ;
-pip install --upgrade musicvideos ;
-sudo curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/musicvideos-gtk" -o "/usr/bin/musicvideos-gtk" ;
+sleep 2s
+echo "Installing musicvideos pip package"
+pip install --upgrade musicvideos > /dev/null ;
+sleep 1s
+echo "Downloading binary to /usr/bin/musicvideos-gtk"
+sudo curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/musicvideos-gtk" -o "/usr/bin/musicvideos-gtk" > /dev/null;
 sudo chmod +x "/usr/bin/musicvideos-gtk" ;
 
 echo "Done!"
