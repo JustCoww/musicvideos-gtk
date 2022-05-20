@@ -762,7 +762,7 @@ class Application:
         # ----- Progress Bar ----- #
         self.loading = Gtk.ProgressBar()
         self.loading.show()
-        self.loading.set_pulse_step(0.1)
+        self.loading.set_show_text(True)
         self.loading.set_vexpand(False)
         self.loading.set_valign(Gtk.Align.CENTER)
         # ----- Build Button Label ----- #
