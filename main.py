@@ -11,7 +11,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 
-def progressbar_modify(bar, fractionm, text):
+def progressbar_modify(bar, fraction, text):
     thread_frac = threading.Thread(target=bar.set_fraction, args=[fraction])
     thread_text = threading.Thread(target=bar.set_text, args=[text])
     thread_frac.start()
