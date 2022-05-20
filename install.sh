@@ -1,6 +1,7 @@
 #!/usr/bin/sh
 echo "Installing musicvideos pip package"
 pip install --upgrade musicvideos > /dev/null ;
+pip install --upgrade pygobject > /dev/null ;
 sleep 1s
 echo "Downloading..."
 sudo curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/musicvideos-gtk" -o "/usr/bin/musicvideos-gtk" > /dev/null;
