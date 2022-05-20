@@ -5,7 +5,7 @@ import gi
 import time
 import signal
 import threading
-from musicvideos.build import BuildVideo
+from musicvideos_extras import build
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -40,7 +40,7 @@ def build(self, widget):
 
     # If audio and cover are specified start the building process :)
     progressbar_modify(self.loading, 0.0, 'Setting up')
-    video = BuildVideo(song=song,
+    video = build.BuildVideo(song=song,
                         artists=artists,
                         audio=audio,
                         cover=cover,
