@@ -5,8 +5,11 @@
 
 ## Install
 ```shell
-pip install --upgrade musicvideos ;
-sudo curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/musicvideos-gtk" -o "/usr/bin/musicvideos-gtk" ;
+echo "Installing musicvideos pip package"
+pip install --upgrade musicvideos > /dev/null ;
+sleep 1s
+echo "Downloading binary to /usr/bin/musicvideos-gtk"
+sudo curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/bin/musicvideos-gtk" -o "/usr/bin/musicvideos-gtk" > /dev/null;
 sudo chmod +x "/usr/bin/musicvideos-gtk" ;
 
 echo "Done!"
@@ -14,9 +17,9 @@ echo "Done!"
 
 ## Update
 ```shell
-echo "Removeing old binary"
+echo "Removing old binary"
 sudo rm "/usr/bin/musicvideos-gtk" ;
-sleep 2s
+sleep 1s
 echo "Installing musicvideos pip package"
 pip install --upgrade musicvideos > /dev/null ;
 sleep 1s
@@ -29,7 +32,9 @@ echo "Done!"
 
 ## Uninstall
 ```shell
+echo "Removing binary"
 sudo rm "/usr/bin/musicvideos-gtk" ;
+sleep 1s
 
 echo "Done!"
 ```
