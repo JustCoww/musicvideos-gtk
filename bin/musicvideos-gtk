@@ -712,7 +712,7 @@ def build(self, widget):
         return print('Audio or Cover not specified!')
 
     # If audio and cover are specified start the building process :)
-    progressbar_modify(self.loading, 0.0)
+    progressbar_modify(self.loading, 0.0, 'Setting up')
     video = BuildVideo(song=song,
                         artists=artists,
                         audio=audio,
