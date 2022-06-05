@@ -19,7 +19,7 @@ curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/install.sh
 
 ## Debian
 ```shell
-sudo apt install python3-pip
+sudo apt install python3-pip libgtk-3-dev
 curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/install.sh" | sh
 ```
 
