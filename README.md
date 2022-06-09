@@ -7,19 +7,19 @@
 
 ## Fedora
 ```shell
-sudo dnf install pip
+sudo dnf install pip curl
 curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/install.sh" | sh
 ```
 
 ## Arch Linux
 ```shell
-sudo pacman -Sy python-pip
+sudo pacman -Sy python-pip curl
 curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/install.sh" | sh
 ```
 
 ## Debian
 ```shell
-sudo apt install python3-pip libgtk-3-dev
+sudo apt install python3-pip libgtk-3-dev curl
 curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/install.sh" | sh
 ```
 
