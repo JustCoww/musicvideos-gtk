@@ -13,13 +13,13 @@ curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/install.sh
 
 ## Arch Linux
 ```shell
-sudo pacman -Sy python-pip curl
+sudo pacman -Sy python-pip curl ffmpeg
 curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/install.sh" | sh
 ```
 
 ## Debian
 ```shell
-sudo apt install python3-pip libgtk-3-dev curl
+sudo apt install python3-pip libgtk-3-dev curl ffmpeg
 curl "https://raw.githubusercontent.com/JustCoww/musicvideos-gtk/main/install.sh" | sh
 ```
 
